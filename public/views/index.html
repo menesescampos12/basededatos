@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>CRUD DE GYMS</title>
+</head>
+
+<body>
+
+    <!-- Button trigger modal -->
+    <div class="my-4 justify-content-center d-flex container">
+        <button type="button" class="fixed-button" id="OpenDataModal" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">+</button>
+    </div>
+    <table class="container" id="restaurantTable"></table>
+    <div class="pagination" id="pagination"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agrega los datos del nuevo Gimnasio</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form id="myForm" method="POST">
+                            <label for="gymName">Nombre del Gimnasio:</label>
+                            <input type="text" id="gymName" required>
+
+                            <label for="gymLocation">Ubicación:</label>
+                            <input type="text" id="gymLocation" required>
+
+                            <label for="gymPrice">Precio:</label>
+                            <input type="text" id="gymPrice" required>
+
+                            <label for="gymOpenTime">Hora de Apertura:</label>
+                            <input type="text" id="gymOpenTime" required>
+
+                            <label for="gymCloseTime">Hora de Cierre:</label>
+                            <input type="text" id="gymCloseTime" required>
+
+                            <label for="coachName">Nombre del Coach:</label>
+                            <input type="text" id="coachName" required>
+
+                            <label for="coachSpecialty">Especialidad del Coach:</label>
+                            <input type="text" id="coachSpecialty" required>
+
+                            <label for="coachMonthlyPrice">Precio Mensual del Coach:</label>
+                            <input type="text" id="coachMonthlyPrice" required>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="btnSendData">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de edicion -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editModalLabel">Editar Gimnasio</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <label for="EditName">Nombre del Gimnasio:</label>
+                        <input type="text" id="EditName" name="name" required>
+
+                        <label for="Editlocation">Ubicación:</label>
+                        <input type="text" id="Editlocation" name="location" required>
+                        <label for="EditgymPrice">Precio:</label>
+                        <input type="text" id="EditgymPrice" name="gymPrice" required>
+
+                        <label for="EditgymOpenTime">Hora de Apertura:</label>
+                        <input type="text" id="EditgymOpenTime" name="gymOpenTime" required>
+
+                        <label for="EditgymCloseTime">Hora de Cierre:</label>
+                        <input type="text" id="EditgymCloseTime" name="gymCloseTime" required>
+
+                        <!-- Sección para los entrenadores -->
+
+                        <label for="EditcoachName">Nombre del Coach:</label>
+                        <input type="text" class="editCoachName" id="EditcoachName" name="coaches[0].name" required>
+
+                        <label for="EditcoachSpecialty">Especialidad del Coach:</label>
+                        <input type="text" class="EditcoachSpecialty" id="EditcoachSpecialty"
+                            name="coaches[0].specialty" required>
+
+                        <label for="EditcoachMonthlyPrice">Precio Mensual del Coach:</label>
+                        <input type="text" class="EditcoachMonthlyPrice" id="EditcoachMonthlyPrice"
+                            name="coaches[0].monthlyPrice" required>
+
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveChangesButton">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="gymsContainer"></div>
+
+    <!-- Agrega esta estructura HTML en algún lugar de tu documento -->
+    <div class="modal" id="gymModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Aquí se llenarán dinámicamente los datos del gimnasio -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/app.js"></script>
+    </script>
+    <script src="./js/bootstrap.min.js"></script>
+</body>
+
+</html>
